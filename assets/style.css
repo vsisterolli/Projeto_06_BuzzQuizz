@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;0,900;1,300&display=swap');
 
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -10,6 +19,10 @@ body {
 
 .container {
     display: flex;
+}
+
+.ocult {
+    display: none;
 }
 
 header {
@@ -37,6 +50,15 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    animation: fadeIn 1s;
+}
+
+.screen3-1 h2 {
+    color: red;
+    font-size: 24px;
+    font-family: 'Roboto';
+    margin-top: -20px;
+    margin-bottom: 20px;
 }
 
 .initial-info {
