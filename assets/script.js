@@ -25,17 +25,17 @@ function constructPageTwo(numQuestions) {
     const questions_box = document.querySelector('.screen3-2');
 
     for(let i = 0; i < numQuestions; i++) 
-        questions_box.innerHTML += `<div class="question">
-                                        <div class="container question-box">
+        questions_box.innerHTML += `<div class="qc-question">
+                                        <div class="container qc-question-box">
                                             <h3>Pergunta ${i+1}</h1>
                                             <img src="assets/images/Vector (3).svg" onclick="openForm(this)">
                                         </div>
-                                        <div class="container ocult question-info">
+                                        <div class="container ocult qc-question-info">
                                             <input type="text" placeholder="Texto da pergunta"></input>
                                             <input type="text" placeholder="Cor de fundo da pergunta"></input>
                                             <h3>Resposta correta</h3>
-                                            <input type="text" placeholder="Resposta correta></input>
-                                            <input type="text" placeholder="URL da imagem"></input>
+                                            <input type="text" placeholder="Resposta correta">
+                                            <input type="text" placeholder="URL da imagem">
                                             <h3>Respostas incorretas</h3>
                                             <input type="text" placeholder="Resposta incorreta 1"></input>
                                             <input type="text" placeholder="URL da imagem"></input>
@@ -71,12 +71,64 @@ function validateInitial(obj) {
 
 }
 
+function validateLevel(level) {
+    if(level.title.length < 10)
+        return "O titulo dos níveis deve ter pelo menos 10 caracteres"
+    if(level.minValue < 0 || level.minValue > 100)
+        return "O valor minimo deve ser um número de 0 a 100";
+    if(!isValidUrl(level.image))
+        return "A imagem deve vir de um URL válido";
+    if(level.text.length < 30)
+        return "A descrição do nível deve ter um mínimo de 30 caracteres";
+    return "";
+}
+
 function validateAnswer(answer) {
     if(!answer.text.length)
         return "Textos das respostas não podem estar vazios"
     if(!isValidUrl(answer.image))
         return "URL das imagens das respostas devem ter formato de URL";
     return "";
+}
+
+function getLevelsInfo() {
+    
+    const levels = document.querySelectorAll('.level-info');
+    const levelsArray = [];
+
+    let haveZero = false;
+
+    levels.forEach(element => {
+        const levelArray = element.querySelectorAll('input');
+        if(levelArray[1].value == 0)
+            haveZero = true;
+        levelObj = {
+            title: levelArray[0].value,
+            minValue: levelArray[1].value,
+            image: levelArray[2].value,
+            text: levelArray[3].value
+        }
+        const validation = validateLevel(levelObj);
+        if(validation !== "") {
+            displayAlert(validation, ".screen3-3");
+            return;
+        }
+        levelsArray.push(levelObj);
+    })
+
+    if(!haveZero) {
+        displayAlert("É necessário que pelo menos um nível tenha valor mínimo de 0%", ".screen3-3");
+        return;
+    }
+
+    userQuizz.levels = levelsArray;
+
+    delete userQuizz.numLevels;
+    delete userQuizz.numQuestions
+
+
+    nodeTransition("screen3-3", "screen3-4");
+
 }
 
 function constructPageThree() {
@@ -93,14 +145,14 @@ function constructPageThree() {
                                     </div>
                                     <div class="container ocult level-info">
                                         <input type="text" placeholder="Titulo do nível">
-                                        <input type="text" placeholder="% de acerto mínima">
+                                        <input type="number" placeholder="% de acerto mínima">
                                         <input type="text" placeholder="URL da imagem do nível">
                                         <input type="text" placeholder="Descrição do nível">
                                     </div>
                                 </div>`
     
     levels_box.innerHTML += `<h2></h2>
-                                <button onclick=""();">Finalizar Quizz</button>`;
+                            <button onclick="getLevelsInfo();">Finalizar Quizz</button>`;
 
 }
 
@@ -119,9 +171,10 @@ function displayAlert(orientation, screen) {
 }
 
 function getQuestionsInfo() {
-    const questions = document.querySelectorAll('.question-info');
+    const questions = document.querySelectorAll('.qc-question-info');
 
     const questionsArr = [];
+    let notGo = false;
     questions.forEach(question => {
         
         const forms = question.querySelectorAll('input');
@@ -130,10 +183,13 @@ function getQuestionsInfo() {
             color: forms[1].value,
             answers: []
         }
+        console.log(questionObj);
 
         const check = validateQuestion(questionObj);
+
         if(check !== "") {
             displayAlert(check, ".screen3-2");
+            notGo = true;
             return;
         }
 
@@ -152,6 +208,7 @@ function getQuestionsInfo() {
 
             else {
                 displayAlert(validation, ".screen3-2");
+                notGo = true;
                 return;
             }
             
@@ -161,9 +218,12 @@ function getQuestionsInfo() {
     
     })
 
+    if(notGo)
+        return;
+        
     userQuizz.questions = questionsArr;
     constructPageThree();
-    nodeTransition(".screen3-2", "screen3-3");
+    nodeTransition(".screen3-2", ".screen3-3");
 
 }
 
@@ -197,7 +257,7 @@ function resetForm(element) {
     const logo = element.querySelector('img');
     logo.classList.toggle('ocult');
 
-    const form = element.querySelector('.question-info');
+    const form = element.querySelector('.qc-question-info');
     form.classList.toggle('ocult');
 }
 
@@ -232,8 +292,8 @@ function getInitialInfo() {
 
     if(validation === "ok") {
         userQuizz = initialInfo;
-        constructPageThree();
-        nodeTransition(".screen3-1", ".screen3-3");
+        constructPageTwo(userQuizz.numQuestions);
+        nodeTransition(".screen3-1", ".screen3-2");
     }
     
     else 
@@ -276,6 +336,7 @@ function loadIndividualQuizz(response){
 
         //Percorre a array de respostas para cada pergunta:
         for(let x = 0; x < response.data.questions[i].answers.length; x++){
+            console.log(x);
             Answer += `
                 <div class="answer">
                     <img src="${shuffledAnswers[x].image}">
@@ -283,7 +344,7 @@ function loadIndividualQuizz(response){
                 </div>
             `
         }
-
+        
         const Question = response.data.questions[i].title;
 
         Main.innerHTML += `

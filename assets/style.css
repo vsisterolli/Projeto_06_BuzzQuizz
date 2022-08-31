@@ -14,38 +14,11 @@
 }
 
 body {
-    background-color: #fafafa;
+    background-color: #F5F6F7;
 }
 
 .container {
     display: flex;
-}
-
-.ocult {
-    display: none;
-}
-
-header {
-
-    position: fixed;
-    z-index: 10;
-    top: 0px;
-    left: 0px;
-
-    font-family: 'Roboto';
-    font-weight: 700;
-    font-size: 37px;
-    line-height: 43px;
-    
-    background-color: #EC362D;
-    color: white;
-    height: 69px;    
-    width: 100%;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-    align-items: center;
-    justify-content: center;
-
 }
 
 .screen1-1{
@@ -224,6 +197,33 @@ header {
 }
 
 
+
+.ocult {
+    display: none;
+}
+
+header {
+
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    left: 0px;
+
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 37px;
+    line-height: 43px;
+    
+    background-color: #EC362D;
+    color: white;
+    height: 60px;    
+    width: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+}
+
 .screen3-1, .screen3-2, .screen3-3 {
     flex-direction: column;
     justify-content: center;
@@ -237,6 +237,11 @@ header {
     font-family: 'Roboto';
     margin-top: -20px;
     margin-bottom: 20px;
+}
+
+.screen3-2 h2 {
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
 .initial-info {
@@ -273,7 +278,7 @@ header {
     line-height: 27px;
 }
 
-.question-info, .level-info {
+.qc-question-info, .level-info {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
@@ -283,7 +288,8 @@ header {
     background-color: white;
 }
 
-.question-info {
+.qc-question-info {
+    margin-bottom: 24px;
     height: 700px;
 }
 
@@ -301,7 +307,7 @@ header {
     margin-bottom: 20px;
 }
 
-.question, .level {
+.qc-question, .level {
     margin-bottom: 24px;
 }
 
@@ -309,17 +315,17 @@ header {
     margin-top: 90px;
 }
 
-.question-info h3, .level-info h3 {
+.qc-question-info h3, .level-info h3 {
     align-self: flex-start;
     margin-left: 20px;
 }
 
-.question-info input, .level-info input {
+.qc-question-info input, .level-info input {
     align-self: flex-start;
     margin-left: 20px;
 }
 
-.question-box, .level-box {
+.qc-question-box, .level-box {
     width: 601px;
     height: 74px;
     background-color: white;
