@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/reset.css">
     <link rel="stylesheet" href="assets/style.css">
-    <title>Document</title>
+    <title>BuzzQuizz</title>
 </head>
 <body>
     <header class="container">BuzzQuizz</header>
-    <section class="quizz-creation">
+
+    <section class="quizz-list">
+        <div class="container screen1-1">
+            <div class="container your-quizzes">
+                <h1>Você não criou nenhum</br>quizz ainda :(</h1>
+                <button>Criar Quizz</button>
+            </div>
+            <div class="container all-quizzes">
+                <h1>Todos os quizzes</h1>
+                <div class="quizz-container"></div>
+            </div>
+        </div>
+    </section>
+    <section class="individual-quizz ocult">
+        <div class="container screen2-1"></div>
+    </section>
+
+    <section class="quizz-creation ocult">
         <div class="container screen3-1">
             <h1>Comece pelo começo</h1>
             <div class="container initial-info">
@@ -29,6 +46,8 @@
             <h1>Agora, decida os níveis</h1>
         </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="assets/script.js"></script>
 </body>
 </html>

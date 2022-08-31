@@ -241,3 +241,81 @@ function getInitialInfo() {
     
 
 }
+
+function loadIndividualQuizz(response){
+    window.scrollTo(0, 0);
+
+    const QuizzList = document.querySelector('.quizz-list');
+    QuizzList.classList.add('ocult');
+
+    const IndividualQuizz = document.querySelector('.individual-quizz');
+    IndividualQuizz.classList.remove('ocult');
+
+    const Image = response.data.image;
+    const Title = response.data.title;
+
+    const Container = document.querySelector('.screen2-1');
+
+    Container.innerHTML = `
+        <div class="top-banner" style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url('${Image}')"><h1>${Title}</h1></div>
+        <div class="main"></div>
+    `
+
+    const Main = document.querySelector('.main')
+
+    //Percorre a array de perguntas:
+    for(let i = 0; i < response.data.questions.length; i++){
+
+        const Answers = response.data.questions[i].answers;
+
+        const shuffledAnswers = Answers.sort(function () {
+            return Math.random() - 0.5;
+        });
+
+        let Answer = '';
+
+        //Percorre a array de respostas para cada pergunta:
+        for(let x = 0; x < response.data.questions[i].answers.length; x++){
+            Answer += `
+                <div class="answer">
+                    <img src="${shuffledAnswers[x].image}">
+                    <h1>${shuffledAnswers[x].text}</h1>
+                </div>
+            `
+        }
+
+        const Question = response.data.questions[i].title;
+
+        Main.innerHTML += `
+            <div class="question-container">
+                <div class="question">
+                    ${Question}
+                </div>
+                <div class="answer-container">${Answer}</div>
+            </div>
+        `;
+    }
+}
+
+function getIndividualQuizz(quizzId){
+    const promise = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${quizzId}`)
+    promise.then(loadIndividualQuizz);
+}
+
+function loadQuizzes(response){
+    const QuizzContainer = document.querySelector('.quizz-container');
+    for (let i = 0; i < response.data.length; i++){
+        QuizzContainer.innerHTML += `
+            <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz" onclick="getIndividualQuizz(${response.data[i].id})">
+                <h1>${response.data[i].title}</h1>
+            </div>
+        `
+    }
+}
+
+function getQuizzes() {
+    const promise = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes')
+    promise.then(loadQuizzes);
+}
+
+getQuizzes() 
