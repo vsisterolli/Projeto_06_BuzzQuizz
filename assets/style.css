@@ -60,7 +60,7 @@ header {
     animation: slide-up 600ms;
 }
 
-.screen3-1 h2 {
+.quizz-creation h2 {
     color: red;
     font-size: 24px;
     font-family: 'Roboto';
@@ -107,8 +107,19 @@ header {
     align-items: center;
     justify-content: space-between;
     width: 601px;
+    padding: 20px;
+    padding-top: 0px;
     height: 700px;
     background-color: white;
+}
+
+.screen3-2 button {
+    width: 353.91px;
+    height: 54px;
+}
+
+.question {
+    margin-bottom: 24px;
 }
 
 .screen3-2 h1 {
@@ -176,7 +187,7 @@ header {
 
 @media (max-width: 600px) {
 
-    .initial-info {
+    .initial-info, .question {
         width: 100vw;
     }
 
