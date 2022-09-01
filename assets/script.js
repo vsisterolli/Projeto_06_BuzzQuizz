@@ -372,7 +372,7 @@ function loadIndividualQuizz(response){
     const Container = document.querySelector('.screen2-1');
 
     Container.innerHTML = `
-        <div class="top-banner" style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url('${Image}')"><h1>${Title}</h1></div>
+        <div style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url('${Image}')" class="top-banner"><h1>${Title}</h1></div>
         <div class="main"></div>
     `
 
@@ -391,7 +391,6 @@ function loadIndividualQuizz(response){
 
         //Percorre a array de respostas para cada pergunta:
         for(let x = 0; x < response.data.questions[i].answers.length; x++){
-            console.log(x);
             Answer += `
                 <div class="answer">
                     <img src="${shuffledAnswers[x].image}">
