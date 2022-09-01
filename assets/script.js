@@ -159,6 +159,7 @@ function constructPageFour() {
         console.log("BBBBBBBBB " + userQuizzesList);
 
         localStorage.setItem("userQuizzesList", JSON.stringify(userQuizzesList));
+        getQuizzes();
 
     })
 
@@ -374,12 +375,11 @@ function loadIndividualQuizz(response){
 
         //Percorre a array de respostas para cada pergunta:
         for(let x = 0; x < response.data.questions[i].answers.length; x++){
-            console.log(x); 
+            console.log(x);
             Answer += `
-                <div class="answer" onclick="choose(this)">
+                <div class="answer">
                     <img src="${shuffledAnswers[x].image}">
                     <h1>${shuffledAnswers[x].text}</h1>
-                    <div class="${response.data.questions[i].answers[x].isCorrectAnswer}"></div>
                 </div>
             `
         }
@@ -418,4 +418,3 @@ function getQuizzes() {
     promise.then(loadQuizzes);
 }
 
-getQuizzes();
