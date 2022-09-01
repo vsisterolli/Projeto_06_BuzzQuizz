@@ -11,7 +11,7 @@
 <body>
     <header class="container">BuzzQuizz</header>
 
-    <section class="quizz-list">
+    <section class="ocult quizz-list">
         <div class="container screen1-1">
             <div class="container your-quizzes">
                 <h1>Você não criou nenhum</br>quizz ainda :(</h1>
@@ -27,7 +27,7 @@
         <div class="container screen2-1"></div>
     </section>
 
-    <section class="ocult quizz-creation">
+    <section class="quizz-creation">
         <div class="container screen3-1">
             <h1>Comece pelo começo</h1>
             <div class="container initial-info">
@@ -44,6 +44,15 @@
         </div>
         <div class="container ocult screen3-3">
             <h1>Agora, decida os níveis</h1>
+        </div>
+        <div class="container ocult screen3-4">
+            <h1>Seu quizz está pronto!</h1>
+            <div class="container user-quizz-ready">
+                <img src="https://http.cat/102" alt="user-selected-image">
+                <h4 class="qc-quizz-title"></h4>
+            </div>
+            <button>Acessar Quizz</button>
+            <button class="white-button" onclick="nodeTransition('.screen3-4', '.screen1-1')">Voltar para Home</button>
         </div>
     </section>
 

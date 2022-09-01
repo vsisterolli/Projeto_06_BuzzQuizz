@@ -97,6 +97,7 @@ function getLevelsInfo() {
     const levelsArray = [];
 
     let haveZero = false;
+    let noContinue = false;
 
     levels.forEach(element => {
         const levelArray = element.querySelectorAll('input');
@@ -111,23 +112,60 @@ function getLevelsInfo() {
         const validation = validateLevel(levelObj);
         if(validation !== "") {
             displayAlert(validation, ".screen3-3");
+            noContinue = true;
             return;
         }
         levelsArray.push(levelObj);
+        console.log("ALOO " + levelsArray);
     })
 
     if(!haveZero) {
         displayAlert("É necessário que pelo menos um nível tenha valor mínimo de 0%", ".screen3-3");
         return;
     }
-
-    userQuizz.levels = levelsArray;
+    if(noContinue)
+        return;
 
     delete userQuizz.numLevels;
     delete userQuizz.numQuestions
 
+    console.log(levelsArray);
+    userQuizz.levels = levelsArray;
 
-    nodeTransition("screen3-3", "screen3-4");
+    constructPageFour();
+    nodeTransition(".screen3-3", ".screen3-4");
+
+}
+
+function constructPageFour() {
+    
+    const img = document.querySelector('.user-quizz-ready img'); 
+    img.src = userQuizz.image;
+
+    const title = document.querySelector('.user-quizz-ready h4');
+    title.textContent = userQuizz.title;
+
+    let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", userQuizz);
+
+    promise.then(response => {
+        
+        console.log(response);
+
+        let userQuizzesList = JSON.parse(localStorage.getItem("userQuizzesList"));
+        if(userQuizzesList == null)
+            userQuizzesList = [];
+        console.log("AAAAAAAA " + userQuizzesList);
+        userQuizzesList.push(response.data.id);
+        console.log("BBBBBBBBB " + userQuizzesList);
+
+        localStorage.setItem("userQuizzesList", JSON.stringify(userQuizzesList));
+
+    })
+
+    promise.catch(response => {
+        console.log(userQuizz);
+        console.log(response);
+    })
 
 }
 
@@ -380,4 +418,4 @@ function getQuizzes() {
     promise.then(loadQuizzes);
 }
 
-getQuizzes() 
+getQuizzes();
