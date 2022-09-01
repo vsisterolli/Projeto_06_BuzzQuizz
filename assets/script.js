@@ -400,10 +400,11 @@ function loadIndividualQuizz(response){
         }
         
         const Question = response.data.questions[i].title;
+        const BackgroundColor = response.data.questions[i].color;
 
         Main.innerHTML += `
             <div class="question-container">
-                <div class="question">
+                <div class="question" style="background-color: ${BackgroundColor}">
                     ${Question}
                 </div>
                 <div class="answer-container">${Answer}</div>
