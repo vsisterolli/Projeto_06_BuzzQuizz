@@ -336,11 +336,12 @@ function loadIndividualQuizz(response){
 
         //Percorre a array de respostas para cada pergunta:
         for(let x = 0; x < response.data.questions[i].answers.length; x++){
-            console.log(x);
+            console.log(x); 
             Answer += `
-                <div class="answer">
+                <div class="answer" onclick="choose(this)">
                     <img src="${shuffledAnswers[x].image}">
                     <h1>${shuffledAnswers[x].text}</h1>
+                    <div class="${response.data.questions[i].answers[x].isCorrectAnswer}"></div>
                 </div>
             `
         }
