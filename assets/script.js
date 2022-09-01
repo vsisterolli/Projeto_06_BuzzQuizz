@@ -137,6 +137,18 @@ function getLevelsInfo() {
 
 }
 
+function backToHome() {
+    nodeTransition('.screen3-4', '.screen3-1');
+    nodeTransition('.quizz-creation', '.quizz-list');
+    const homePage = document.querySelector('.screen1-1')
+    homePage.classList.remove('.ocult');
+}
+
+function loadUserQuizz(id) {
+    backToHome();
+    getIndividualQuizz(id);
+}
+
 function constructPageFour() {
     
     const img = document.querySelector('.user-quizz-ready img'); 
@@ -154,12 +166,16 @@ function constructPageFour() {
         let userQuizzesList = JSON.parse(localStorage.getItem("userQuizzesList"));
         if(userQuizzesList == null)
             userQuizzesList = [];
-        console.log("AAAAAAAA " + userQuizzesList);
         userQuizzesList.push(response.data.id);
-        console.log("BBBBBBBBB " + userQuizzesList);
+
 
         localStorage.setItem("userQuizzesList", JSON.stringify(userQuizzesList));
         getQuizzes();
+
+        const initiateButton = document.querySelector('.screen3-4 button');
+        initiateButton.setAttribute('onclick', `loadUserQuizz(${response.data.id})`);
+
+
 
     })
 
@@ -404,6 +420,7 @@ function getIndividualQuizz(quizzId){
 
 function loadQuizzes(response){
     const QuizzContainer = document.querySelector('.quizz-container');
+    QuizzContainer.innerHTML = "";
     for (let i = 0; i < response.data.length; i++){
         QuizzContainer.innerHTML += `
             <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz" onclick="getIndividualQuizz(${response.data[i].id})">
@@ -418,3 +435,4 @@ function getQuizzes() {
     promise.then(loadQuizzes);
 }
 
+getQuizzes();
