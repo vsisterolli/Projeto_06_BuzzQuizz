@@ -142,10 +142,11 @@ function backToHome() {
     nodeTransition('.quizz-creation', '.quizz-list');
     const homePage = document.querySelector('.screen1-1')
     homePage.classList.remove('.ocult');
+    getQuizzes();
 }
 
 function loadUserQuizz(id) {
-    backToHome();
+    nodeTransition('.screen3-4', '.loading-screen');
     getIndividualQuizz(id);
 }
 
@@ -157,10 +158,14 @@ function constructPageFour() {
     const title = document.querySelector('.user-quizz-ready h4');
     title.textContent = userQuizz.title;
 
+    nodeTransition(".quizz-creation", ".loading-screen");
+
     let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", userQuizz);
 
     promise.then(response => {
         
+        nodeTransition(".loading-screen", ".quizz-creation");
+
         console.log(response);
 
         let userQuizzesList = JSON.parse(localStorage.getItem("userQuizzesList"));
@@ -170,7 +175,6 @@ function constructPageFour() {
 
 
         localStorage.setItem("userQuizzesList", JSON.stringify(userQuizzesList));
-        getQuizzes();
 
         const initiateButton = document.querySelector('.screen3-4 button');
         initiateButton.setAttribute('onclick', `loadUserQuizz(${response.data.id})`);
@@ -189,6 +193,7 @@ function constructPageFour() {
 function constructPageThree() {
     
     const levels_box = document.querySelector('.screen3-3');
+    levels_box.innerHTML = "<h1>Agora, decida os níveis</h1>"
     console.log(userQuizz)
     console.log(userQuizz.numLevels)
 
@@ -358,13 +363,9 @@ function getInitialInfo() {
 }
 
 function loadIndividualQuizz(response){
+    nodeTransition('.loading-screen', '.individual-quizz');
+
     window.scrollTo(0, 0);
-
-    const QuizzList = document.querySelector('.quizz-list');
-    QuizzList.classList.add('ocult');
-
-    const IndividualQuizz = document.querySelector('.individual-quizz');
-    IndividualQuizz.classList.remove('ocult');
 
     const Image = response.data.image;
     const Title = response.data.title;
@@ -414,11 +415,15 @@ function loadIndividualQuizz(response){
 }
 
 function getIndividualQuizz(quizzId){
+    nodeTransition('.quizz-list', '.loading-screen');
+
     const promise = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${quizzId}`)
     promise.then(loadIndividualQuizz);
 }
 
 function loadQuizzes(response){
+    nodeTransition('.loading-screen', '.quizz-list');
+
     const QuizzContainer = document.querySelector('.quizz-container');
     QuizzContainer.innerHTML = "";
     for (let i = 0; i < response.data.length; i++){
@@ -431,6 +436,8 @@ function loadQuizzes(response){
 }
 
 function getQuizzes() {
+    nodeTransition('.quizz-list', '.loading-screen');
+
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes')
     promise.then(loadQuizzes);
 }

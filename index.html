@@ -11,14 +11,31 @@
 <body>
     <header class="container">BuzzQuizz</header>
 
+    <div class="container loading-screen ocult">
+        <img src="assets/images/Spinner.gif" alt="loading spinner">
+        <h1>Carregando</h1>
+    </div>
+
     <section class="quizz-list">
         <div class="container screen1-1">
-            <div class="container your-quizzes">
+            <div class="container your-quizzes yq-empty">
                 <h1>Você não criou nenhum</br>quizz ainda :(</h1>
                 <button onclick="nodeTransition('.quizz-list', '.quizz-creation')">Criar Quizz</button>
             </div>
+            <div class="container your-quizzes yq-filled ocult">
+                <div class="container ql-title">
+                    <h1>Seus Quizzes</h1>
+                    <ion-button onclick="nodeTransition('.quizz-list', '.quizz-creation')"><ion-icon name="add-circle"></ion-icon></ion-button>
+                </div>
+                <div class="container yq-quizzlist">
+                    <div class="quizz"><h1>modelo</h1></div>
+                    <div class="quizz"><h1>modelo</h1></div>
+                </div>
+            </div>
             <div class="container all-quizzes">
-                <h1>Todos os Quizzes</h1>
+                <div class="ql-title">
+                    <h1>Todos os Quizzes</h1>
+                </div>
                 <div class="quizz-container"></div>
             </div>
         </div>
@@ -59,5 +76,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="assets/script.js"></script>
     <script src="assets/script_Yuri.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
