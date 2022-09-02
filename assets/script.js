@@ -23,6 +23,7 @@ function nodeTransition(initial, target) {
 function constructPageTwo(numQuestions) {
     
     const questions_box = document.querySelector('.screen3-2');
+    questions_box.innerHTML = '<h1>Crie suas perguntas</h1>';
 
     for(let i = 0; i < numQuestions; i++) 
         questions_box.innerHTML += `<div class="qc-question">
@@ -84,6 +85,8 @@ function validateLevel(level) {
 }
 
 function validateAnswer(answer) {
+    if(!answer.text.length && !answer.image.length)
+        return "empty";
     if(!answer.text.length)
         return "Textos das respostas não podem estar vazios"
     if(!isValidUrl(answer.image))
@@ -193,9 +196,7 @@ function constructPageFour() {
 function constructPageThree() {
     
     const levels_box = document.querySelector('.screen3-3');
-    levels_box.innerHTML = "<h1>Agora, decida os níveis</h1>"
-    console.log(userQuizz)
-    console.log(userQuizz.numLevels)
+    levels_box.innerHTML = "<h1>Agora, decida os níveis</h1>";
 
     for(let i = 0; i < parseInt(userQuizz.numLevels); i++) 
         levels_box.innerHTML += `<div class="level">
@@ -243,9 +244,9 @@ function getQuestionsInfo() {
             color: forms[1].value,
             answers: []
         }
-        console.log(questionObj);
 
         const check = validateQuestion(questionObj);
+        console.log(check);
 
         if(check !== "") {
             displayAlert(check, ".screen3-2");
@@ -253,6 +254,7 @@ function getQuestionsInfo() {
             return;
         }
 
+        let validation;
         for(let i = 2; i < 10; i += 2) {
             
             const answer = {
@@ -261,19 +263,36 @@ function getQuestionsInfo() {
                 isCorrectAnswer: (i === 2)
             }
 
-            const validation = validateAnswer(answer);
+            validation = validateAnswer(answer);
+            console.log(i, validation);
 
-            if(validation === "")
-                questionObj.answers.push(answer);
+            if(validation === "empty") {
+                console.log(i);
+                if(i === 2) {
+                    displayAlert('É preciso que as perguntas tenham uma resposta correta', ".screen3-2");
+                    notGo = true;
+                    return;
+                }
+                else continue;
+            }        
 
-            else {
+            else if(validation !== "") {
                 displayAlert(validation, ".screen3-2");
                 notGo = true;
                 return;
             }
+
+            questionObj.answers.push(answer);
             
         }
 
+        if(questionObj.answers.length < 2) {
+            displayAlert("É necessário ter ao menos 1 resposta incorreta para cada pergunta", ".screen3-2");
+            notGo = true;
+            return;
+        }
+
+        
         questionsArr.push(questionObj);
     
     })
@@ -352,6 +371,8 @@ function getInitialInfo() {
 
     if(validation === "ok") {
         userQuizz = initialInfo;
+        for(let i = 0; i < 4; i++)
+            form[i].value = "";
         constructPageTwo(userQuizz.numQuestions);
         nodeTransition(".screen3-1", ".screen3-2");
     }
