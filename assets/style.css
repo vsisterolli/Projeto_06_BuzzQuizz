@@ -501,7 +501,7 @@ header {
 }
 
 .true{ /* Identify true answers */
-    color: #009C22;
+    font-size: 800px;
 }
 .false{ /* Identify false answers */
     color: #FF4B4B;
