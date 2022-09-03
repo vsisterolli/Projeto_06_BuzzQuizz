@@ -1,4 +1,7 @@
 let userQuizz = {};
+let QuestionInfoResult = []; // Saves server information for the chosen question
+let ResultPoints = 0;        // Count the number of correct answers
+let QtdMenu = 0;             // Count the number of quizz result menu
 
 function isValidUrl(urlString) {
     try { 
@@ -384,6 +387,7 @@ function getInitialInfo() {
 }
 
 function loadIndividualQuizz(response){
+    QtdMenu = 0;
     nodeTransition('.loading-screen', '.individual-quizz');
 
     window.scrollTo(0, 0);
@@ -414,7 +418,7 @@ function loadIndividualQuizz(response){
         //Percorre a array de respostas para cada pergunta:
         for(let x = 0; x < response.data.questions[i].answers.length; x++){
             Answer += `
-                <div class="answer" onclick="choose(this)">
+                <div class="answer" onclick="choose(this, ${response.data.questions.length})">
                     <img src="${shuffledAnswers[x].image}">
                     <h1>${shuffledAnswers[x].text}</h1>
                     <div class="${response.data.questions[i].answers[x].isCorrectAnswer}"></div>
@@ -433,6 +437,11 @@ function loadIndividualQuizz(response){
                 <div class="answer-container">${Answer}</div>
             </div>
         `;
+    }
+
+    QuestionInfoResult = [];
+    for (let i = 0; i < response.data.levels.length; i++){
+        QuestionInfoResult.push({title: response.data.levels[i].title, image:response.data.levels[i].image, text:response.data.levels[i].text, minValue:response.data.levels[i].minValue})
     }
 }
 
