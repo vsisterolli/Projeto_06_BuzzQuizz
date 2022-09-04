@@ -459,10 +459,6 @@ function loadQuizzes(response){
     nodeTransition('.loading-screen', '.quizz-list');
 
     let CheckLocalStorage = localStorage.getItem("userQuizzesList");
-    if (CheckLocalStorage !== null) {
-        nodeTransition('.yq-empty', '.yq-filled')
-    }
-
 
     const QuizzContainer = document.querySelector('.quizz-container');
     const UserQuizzContainer = document.querySelector('.yq-quizzlist');
@@ -470,6 +466,7 @@ function loadQuizzes(response){
     UserQuizzContainer.innerHTML = "";
     for (let i = 0; i < response.data.length; i++){
         if (CheckLocalStorage.indexOf(`${response.data[i].id}`) !== -1){
+            nodeTransition('.yq-empty', '.yq-filled')
             UserQuizzContainer.innerHTML += `
             <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz" onclick="getIndividualQuizz(${response.data[i].id})">
                 <h1>${response.data[i].title}</h1>
