@@ -623,9 +623,29 @@ header {
         aspect-ratio: 10/4;
     }
 
+    .question-container {
+        margin-top: 5vh;
+    }
+
     .question {
         min-height: auto;
         aspect-ratio: 10/2.6;
+    }
+
+    .final-result-container {
+        flex-direction: column;
+    }
+
+    .final-result-text {
+        margin-top: 9px;
+    }
+
+    .final-result-container img {
+        width: 100%;
+    }
+
+    .end-quizz-buttons {
+        margin: 6vh 0vh;
     }
 
 }
