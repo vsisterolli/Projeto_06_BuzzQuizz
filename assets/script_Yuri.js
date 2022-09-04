@@ -63,6 +63,10 @@ function ShowResult (){
                     </div>
                 </div>
             </div>
+            <div class="container end-quizz-buttons">
+                <button class="eq-restart" onclick="getIndividualQuizz(Screen2QuizzId)">Reiniciar Quizz</button>
+                <button class="eq-back" onclick="window.location.reload()">Voltar para home</button>
+            </div>
             `;
         }
     }

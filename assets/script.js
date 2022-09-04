@@ -445,7 +445,11 @@ function loadIndividualQuizz(response){
     }
 }
 
+let Screen2QuizzId;
+
 function getIndividualQuizz(quizzId){
+    Screen2QuizzId = quizzId;
+
     nodeTransition('.quizz-list', '.loading-screen');
 
     const promise = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${quizzId}`)
