@@ -26,7 +26,7 @@ function choose(ChoosenAnswer, QtdQuestions){
             ResultPoints++;
         } 
 
-        // Scroll to next question
+        // Scroll to the next question
         if (Parent.parentNode.nextElementSibling !== null) {
             setTimeout(ScroollToNextQuestion, 2000, Parent.parentNode.nextElementSibling);
         } else{ // For the last question
@@ -38,8 +38,8 @@ function choose(ChoosenAnswer, QtdQuestions){
     }
 }
 
-function ScroollToNextQuestion(element){
-    element.scrollIntoView({behavior: "smooth", block: "center"});
+function ScroollToNextQuestion(NextElement){
+    NextElement.scrollIntoView({behavior: "smooth", block: "center"});
 }
 
 function CalculateResult(NumberOfQuestions){
@@ -62,6 +62,10 @@ function ShowResult (){
                         <p class="final-result-text">${QuestionInfoResult[j].text}</p>
                     </div>
                 </div>
+            </div>
+            <div class="container end-quizz-buttons">
+                <button class="eq-restart" onclick="getIndividualQuizz(Screen2QuizzId)">Reiniciar Quizz</button>
+                <button class="eq-back" onclick="window.location.reload()">Voltar para home</button>
             </div>
             `;
         }

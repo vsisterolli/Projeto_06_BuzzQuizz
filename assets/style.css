@@ -250,7 +250,7 @@ button{
 
 .answer-container img{
     width: 100%;
-    aspect-ratio: 10/7;
+    aspect-ratio: 10/6;
 }
 
 .answer-container h1{
@@ -525,8 +525,8 @@ header {
 
 .final-result-container{
     display:flex;
-    margin-bottom: 20px;
     word-break: break-word;
+    margin-bottom: 57px;
 }
 
 .final-result-container img{
@@ -535,8 +535,6 @@ header {
 }
 
 .final-result-text{
-
-    height: 100%;
     border-radius: nullpx;
     margin-left: 21px;
 
@@ -546,47 +544,78 @@ header {
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
-
+    color: #484848;
 }
 
+.end-quizz-buttons{
+    margin: 57px 0px 70px 0px;
 
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
 
+.end-quizz-buttons button{
+    width: 260px;
+    height: 52px;
+    border: none;
+    border-radius: 15px;
+    margin-bottom: 16px;
 
+    font-family: 'Roboto', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+}
+
+.eq-restart{
+    background-color: #EC362D;
+    color: #FFF5F4;
+}
+
+.eq-back{
+    background-color: transparent;
+    color: #818181;
+}
 
 @media (max-width: 600px) {
 
-    .initial-info, .qc-question, .level {
-        width: 100vw;
-    }
-    .final-result-container{
-        flex-direction: column;
-    }
-    .final-result-text {
-        margin-left: 0px;
-    }
-}
-
-@media (max-width: 1051px) {
-
-    .your-quizzes {
-        margin: 15vh 0vh 6vh 0vh;
-    }
-
-    .all-quizzes, .yq-quizzlist, .your-quizzes {
-        width: 95vw;
-    }
-    
     .ql-title ion-button{
         position: absolute;
         right: 7px;
     }
 
+    .initial-info, .qc-question, .level {
+        width: 100vw;
+    }
+
+    .question{
+        margin-bottom: 13px;
+    }
+
+    .final-result-container{
+        flex-direction: column;
+    }
+
+    .final-result-text {
+        margin-left: 0px;
+        margin-top: 9px;
+    }
+
+    .final-result-container img{
+        width: 100%;
+    }
+
+    .end-quizz-buttons {
+        margin: 6vh 0vh;
+    }
 }
 
-@media (max-width: 757px) {
+@media (max-width: 759px) {
 
     .question-container {
         width: 100vw;
+        margin-top: 5vh;
     }
 
     .top-banner {
@@ -599,4 +628,15 @@ header {
         aspect-ratio: 10/2.6;
     }
 
+}
+
+@media (max-width: 1051px) {
+
+    .your-quizzes {
+        margin: 15vh 0vh 6vh 0vh;
+    }
+
+    .all-quizzes, .yq-quizzlist, .your-quizzes {
+        width: 95vw;
+    }
 }
