@@ -18,14 +18,14 @@
 
     <section class="quizz-list">
         <div class="container screen1-1">
-            <div class="container your-quizzes yq-empty">
+            <div class="container your-quizzes yq-empty" data-identifier="user-quizzes">
                 <h1>Você não criou nenhum</br>quizz ainda :(</h1>
-                <button onclick="nodeTransition('.quizz-list', '.quizz-creation')">Criar Quizz</button>
+                <button onclick="nodeTransition('.quizz-list', '.quizz-creation')" data-identifier="create-quizz">Criar Quizz</button>
             </div>
-            <div class="container your-quizzes yq-filled ocult">
+            <div class="container your-quizzes yq-filled ocult" data-identifier="user-quizzes">
                 <div class="container ql-title">
                     <h1>Seus Quizzes</h1>
-                    <ion-button onclick="nodeTransition('.quizz-list', '.quizz-creation')"><ion-icon name="add-circle"></ion-icon></ion-button>
+                    <ion-button onclick="nodeTransition('.quizz-list', '.quizz-creation')" data-identifier="create-quizz"><ion-icon name="add-circle"></ion-icon></ion-button>
                 </div>
                 <div class="container yq-quizzlist">
                     <div class="quizz"><h1>modelo</h1></div>
@@ -36,7 +36,7 @@
                 <div class="ql-title">
                     <h1>Todos os Quizzes</h1>
                 </div>
-                <div class="quizz-container"></div>
+                <div class="quizz-container" data-identifier="general-quizzes"></div>
             </div>
         </div>
     </section>

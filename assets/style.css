@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;0,900;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
 
 @keyframes slide-up {
     0% {
@@ -359,6 +359,7 @@ header {
     overflow: hidden;
     max-width: 485px;
     white-space: nowrap;
+    word-break: break-word;
     text-overflow: ellipsis;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
@@ -456,6 +457,7 @@ header {
 .screen3-2 button, .screen3-3 button {
     width: 353.91px;
     height: 54px;
+    margin-bottom: 20px;
 }
 
 .screen3-3 button {
@@ -529,7 +531,7 @@ header {
     font-size: 19px;
 }
 
-.initial-info input::placeholder {
+.initial-info input::placeholder, .level-info input::placeholder, .qc-question input::placeholder {
     font-family: 'Roboto', sans-serif;
     font-style: italic;
     font-weight: 400;
@@ -623,6 +625,10 @@ header {
     color: #818181;
 }
 
+.qc-question-box img, .level img {
+    cursor: pointer;
+}
+
 @media (max-width: 600px) {
 
     .ql-title ion-button{
@@ -630,8 +636,16 @@ header {
         right: 7px;
     }
 
-    .initial-info, .qc-question, .level {
+    .initial-info, .qc-question, .level, .qc-question-box, .qc-question-info, .level-box, .level-info {
         width: 100vw;
+    }
+
+    #to3-2-button, .screen3-2 button, .screen3-3 button {
+        width: 85vw;
+    }
+
+    .screen3-4 img {
+        width: 90vw;
     }
 
     .question{
@@ -691,6 +705,10 @@ header {
 
     .end-quizz-buttons {
         margin: 6vh 0vh;
+    }
+
+    .end-quizz-buttons button {
+        width: 70vw;
     }
 
 }

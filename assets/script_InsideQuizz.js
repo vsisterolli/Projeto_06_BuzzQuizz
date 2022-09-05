@@ -52,7 +52,7 @@ function ShowResult (){
         if (ResultPoints >= Number(QuestionInfoResult[j].minValue) && QtdMenu === 0) {
             QtdMenu++;
             Main.innerHTML += `
-            <div class="question-container">
+            <div class="question-container" data-identifier="quizz-result">
                 <div class="question final-result-title">
                     ${ResultPoints}% de acerto: ${QuestionInfoResult[j].title}
                 </div>

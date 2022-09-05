@@ -29,10 +29,10 @@ function constructPageTwo(numQuestions) {
     questions_box.innerHTML = '<h1>Crie suas perguntas</h1>';
 
     for(let i = 0; i < numQuestions; i++) 
-        questions_box.innerHTML += `<div class="qc-question">
+        questions_box.innerHTML += `<div class="qc-question" data-identifier="question-form">
                                         <div class="container qc-question-box">
                                             <h3>Pergunta ${i+1}</h1>
-                                            <img src="assets/images/Vector (3).svg" onclick="openForm(this)">
+                                            <img src="assets/images/Vector (3).svg" onclick="openForm(this)" data-identifier="expand">
                                         </div>
                                         <div class="container ocult qc-question-info">
                                             <input type="text" placeholder="Texto da pergunta">
@@ -309,10 +309,10 @@ function constructPageThree() {
     levels_box.innerHTML = "<h1>Agora, decida os níveis</h1>";
 
     for(let i = 0; i < parseInt(userQuizz.numLevels); i++) 
-        levels_box.innerHTML += `<div class="level">
+        levels_box.innerHTML += `<div class="level" data-identifier="level">
                                     <div class="container level-box">
                                         <h3>Nível ${i+1}</h1>
-                                        <img src="assets/images/Vector (3).svg" onclick="openLevel(this)">
+                                        <img src="assets/images/Vector (3).svg" onclick="openLevel(this)" data-identifier="expand">
                                     </div>
                                     <div class="container ocult level-info">
                                         <input type="text" placeholder="Titulo do nível">
@@ -545,7 +545,7 @@ function loadIndividualQuizz(response){
         //Percorre a array de respostas para cada pergunta:
         for(let x = 0; x < response.data.questions[i].answers.length; x++){
             Answer += `
-                <div class="answer" onclick="choose(this, ${response.data.questions.length})">
+                <div class="answer" onclick="choose(this, ${response.data.questions.length})" data-identifier="answer">
                     <img src="${shuffledAnswers[x].image}">
                     <h1>${shuffledAnswers[x].text}</h1>
                     <div class="${response.data.questions[i].answers[x].isCorrectAnswer}"></div>
@@ -557,7 +557,7 @@ function loadIndividualQuizz(response){
         const BackgroundColor = response.data.questions[i].color;
 
         Main.innerHTML += `
-            <div class="question-container">
+            <div class="question-container" data-identifier="question">
                 <div class="question" style="background-color: ${BackgroundColor}">
                     ${Question}
                 </div>
@@ -571,6 +571,7 @@ function loadIndividualQuizz(response){
         QuestionInfoResult.push({title: response.data.levels[i].title, image:response.data.levels[i].image, text:response.data.levels[i].text, minValue:response.data.levels[i].minValue})
     }
 }
+
 let Screen2QuizzId;
 
 function getIndividualQuizz(quizzId){
@@ -597,7 +598,7 @@ function loadQuizzes(response){
             nodeTransition('.yq-empty', '.yq-filled')
             UserQuizzContainer.innerHTML += `
             <div>
-                <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz">
+                <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz" data-identifier="quizz-card">
                     <h1 onclick="getIndividualQuizz(${response.data[i].id})">${response.data[i].title}</h1>
                     <div onclick="getIndividualQuizz(${response.data[i].id})" class="quizz-ghost"></div>
                     <div class="container button-section" onclick="">
@@ -611,7 +612,7 @@ function loadQuizzes(response){
         `
         } else{
             QuizzContainer.innerHTML += `
-                <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz" onclick="getIndividualQuizz(${response.data[i].id})">
+                <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz" onclick="getIndividualQuizz(${response.data[i].id})" data-identifier="quizz-card">
                     <h1>${response.data[i].title}</h1>
                 </div>
             `
