@@ -272,15 +272,22 @@ function constructPageFour() {
     promise.then(response => {
         
         nodeTransition(".loading-screen", ".quizz-creation");
-
+        console.log(response);
 
         let userQuizzesList = JSON.parse(localStorage.getItem("userQuizzesList"));
-        if(userQuizzesList == null)
+        let userQuizzesKeys = JSON.parse(localStorage.getItem("userQuizzesKeys"));
+
+        if(userQuizzesKeys == null) {
             userQuizzesList = [];
+            userQuizzesKeys = [];
+        }
+
         userQuizzesList.push(response.data.id);
+        userQuizzesKeys.push(response.data.key);
 
 
         localStorage.setItem("userQuizzesList", JSON.stringify(userQuizzesList));
+        localStorage.setItem("userQuizzesKeys", JSON.stringify(userQuizzesKeys));
 
         const initiateButton = document.querySelector('.screen3-4 button');
         initiateButton.setAttribute('onclick', `loadUserQuizz(${response.data.id})`);
@@ -388,7 +395,8 @@ function getQuestionsInfo() {
                 continue;
             }
 
-            questionObj.answers.push(answer);
+            if(answer.text != '' && answer.image != '')
+                questionObj.answers.push(answer);
             
         }
         
@@ -479,6 +487,32 @@ function getInitialInfo() {
 
 }
 
+function deleteQuizz(quizzId) {
+    
+    if(!confirm("Tem certeza que deseja deletar o quizz?"))
+        return;
+    
+    let quizzList = JSON.parse(localStorage.getItem("userQuizzesList"));
+    const index = quizzList.indexOf(quizzId);
+
+    let keyList = JSON.parse(localStorage.getItem("userQuizzesKeys"));
+
+
+    const headers = {
+        'Secret-Key': keyList[index]
+    }
+
+    const promise = axios.delete("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/" + quizzId, {headers});
+    promise.then(element => {
+        keyList.splice(index, 1);
+        quizzList.splice(index, 1);
+        localStorage.setItem("userQuizzesList", JSON.stringify(quizzList));
+        localStorage.setItem("userQuizzesKeys", JSON.stringify(keyList));
+        getQuizzes();
+    })
+
+}
+
 function loadIndividualQuizz(response){
     QtdMenu = 0;
     nodeTransition('.loading-screen', '.individual-quizz');
@@ -562,8 +596,17 @@ function loadQuizzes(response){
         if (CheckLocalStorage.indexOf(`${response.data[i].id}`) !== -1){
             nodeTransition('.yq-empty', '.yq-filled')
             UserQuizzContainer.innerHTML += `
-            <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz" onclick="getIndividualQuizz(${response.data[i].id})">
-                <h1>${response.data[i].title}</h1>
+            <div>
+                <div style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url('${response.data[i].image}')" class="quizz">
+                    <h1 onclick="getIndividualQuizz(${response.data[i].id})">${response.data[i].title}</h1>
+                    <div onclick="getIndividualQuizz(${response.data[i].id})" class="quizz-ghost"></div>
+                    <div class="container button-section" onclick="">
+                        <ion-icon style="padding-left: 2.5px" name="create-outline"></ion-icon>
+                        <div onclick="deleteQuizz(${response.data[i].id});">
+                            <ion-icon name="trash-outline" onclick="deleteQuizz();"></ion-icon>
+                        </div>
+                    </div>
+                </div>
             </div>
         `
         } else{
