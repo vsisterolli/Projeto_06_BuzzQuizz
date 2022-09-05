@@ -447,6 +447,7 @@ function loadIndividualQuizz(response){
 let Screen2QuizzId;
 
 function getIndividualQuizz(quizzId){
+    ResultPoints = 0;
     Screen2QuizzId = quizzId;
 
     nodeTransition('.quizz-list', '.loading-screen');
