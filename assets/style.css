@@ -371,7 +371,7 @@ header {
     justify-content: space-evenly;
 
     width: 600px;
-    height: 256px;
+    min-height: 256px;
     margin-bottom: 85px;
 }
 
@@ -408,11 +408,11 @@ header {
 
 .qc-question-info {
     margin-bottom: 24px;
-    height: 700px;
+    min-height: 700px;
 }
 
 .level-info {
-    height: 318px;
+    min-height: 318px;
 }
 
 .screen3-2 button, .screen3-3 button {
@@ -450,6 +450,13 @@ header {
     padding: 20px;
     justify-content: space-between;
     align-items: center;
+}
+
+.level-box h2, .level-info h2, .initial-info h2, .qc-question-box h2, .qc-question-info h2 {
+    margin-top: 10px;
+    padding-left: 20px;
+    align-self: flex-start;
+    font-size: 16px;
 }
 
 .quizz-creation button {

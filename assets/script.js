@@ -35,18 +35,28 @@ function constructPageTwo(numQuestions) {
                                             <img src="assets/images/Vector (3).svg" onclick="openForm(this)">
                                         </div>
                                         <div class="container ocult qc-question-info">
-                                            <input type="text" placeholder="Texto da pergunta"></input>
-                                            <input type="text" placeholder="Cor de fundo da pergunta"></input>
+                                            <input type="text" placeholder="Texto da pergunta">
+                                            <h2 class="ocult"></h2>
+                                            <input type="text" placeholder="Cor de fundo da pergunta">
+                                            <h2 class="ocult"></h2>
                                             <h3>Resposta correta</h3>
                                             <input type="text" placeholder="Resposta correta">
+                                            <h2 class="ocult"></h2>
                                             <input type="text" placeholder="URL da imagem">
+                                            <h2 class="ocult"></h2>
                                             <h3>Respostas incorretas</h3>
                                             <input type="text" placeholder="Resposta incorreta 1"></input>
+                                            <h2 class="ocult"></h2>
                                             <input type="text" placeholder="URL da imagem"></input>
+                                            <h2 class="ocult"></h2>
                                             <input type="text" placeholder="Resposta incorreta 2"></input>
+                                            <h2 class="ocult"></h2>
                                             <input type="text" placeholder="URL da imagem"></input>
+                                            <h2 class="ocult"></h2>
                                             <input type="text" placeholder="Resposta incorreta 3"></input>
+                                            <h2 class="ocult"></h2>
                                             <input type="text" placeholder="URL da imagem"></input>
+                                            <h2 class="ocult"></h2>
                                         </div>
                                     </div>
                                     `
@@ -57,44 +67,133 @@ function constructPageTwo(numQuestions) {
 }
 
 
-function validateInitial(obj) {
+function validateInitial(obj, element) {
 
-    if(obj.title.length < 20 || obj.title.length > 65)
-        return "O título do quizz precisa ter entre 20 a 65 caracteres";
-
-    if(!isValidUrl(obj.image))
-        return "A imagem precisa ter uma URL válida";
-
-    if(obj.numQuestions < 3)
-        return "O quizz precisa ter no mínimo 3 perguntas";
-
-    if(obj.numLevels < 2)
-        return "O quizz precisa ter no mínimo 2 níveis";
+    const alerts = element.querySelectorAll('h2');
+    let ok = "ok";
+    if(obj.title.length < 20 || obj.title.length > 65) {
+        alerts[0].innerHTML =  "O título do quizz precisa ter entre 20 a 65 caracteres";
+        alerts[0].classList.remove('ocult');
+        ok = "a";
+    }
+    else 
+        alerts[0].classList.add('ocult');
     
-    return "ok";
+
+    if(!isValidUrl(obj.image)) {
+        alerts[1].innerHTML =  "A imagem precisa ter uma URL válida";
+        alerts[1].classList.remove('ocult');
+        ok = "a";
+    }
+    else 
+        alerts[1].classList.add('ocult');
+    
+
+    if(obj.numQuestions < 3) {
+        alerts[2].innerHTML =  "O quizz precisa ter no mínimo 3 perguntas";
+        alerts[2].classList.remove('ocult');
+        ok = "a";
+    }
+    else 
+        alerts[2].classList.add('ocult');
+    
+
+    if(obj.numLevels < 2) {
+        alerts[3].innerHTML =  "O quizz precisa ter no mínimo 2 níveis";
+        alerts[3].classList.remove('ocult');
+        ok = "a";
+    }
+    else 
+        alerts[3].classList.add('ocult');
+    
+    
+    return ok;
 
 }
 
-function validateLevel(level) {
-    if(level.title.length < 10)
-        return "O titulo dos níveis deve ter pelo menos 10 caracteres"
-    if(level.minValue < 0 || level.minValue > 100)
-        return "O valor minimo deve ser um número de 0 a 100";
-    if(!isValidUrl(level.image))
-        return "A imagem deve vir de um URL válido";
-    if(level.text.length < 30)
-        return "A descrição do nível deve ter um mínimo de 30 caracteres";
-    return "";
+function validateLevel(levelObj, element) {
+    const alerts = element.querySelectorAll('h2')
+    let ok = "";
+    if(levelObj.title.length < 10) {
+        alerts[0].classList.remove('ocult');
+        alerts[0].innerHTML = 'O titulo dos níveis deve ter pelo menos 10 caracteres'
+        ok = "a";
+    }
+    else 
+        alerts[0].classList.add('ocult');    
+
+    if(levelObj.minValue < 0 || levelObj.minValue > 100) {
+        alerts[1].classList.remove('ocult');
+        alerts[1].innerHTML = "O valor minimo deve ser um número de 0 a 100";
+        ok = "a";
+    }
+    else 
+        alerts[1].classList.add('ocult');
+
+
+    if(!isValidUrl(levelObj.image)) {
+        alerts[2].classList.remove('ocult');
+        alerts[2].innerHTML = "A imagem deve vir de um URL válido";
+        ok = "a";
+    }
+    else 
+        alerts[2].classList.add('ocult');
+
+
+    if(levelObj.text.length < 30) {
+        alerts[3].classList.remove('ocult');
+        alerts[3].innerHTML = "A descrição do nível deve ter um mínimo de 30 caracteres";
+        ok = "a";
+    }
+    else 
+        alerts[3].classList.add('ocult');
+
+    return ok;
 }
 
-function validateAnswer(answer) {
-    if(!answer.text.length && !answer.image.length)
-        return "empty";
-    if(!answer.text.length)
-        return "Textos das respostas não podem estar vazios"
-    if(!isValidUrl(answer.image))
-        return "URL das imagens das respostas devem ter formato de URL";
-    return "";
+function validateAnswer(answer, element, i) {
+    const alerts = element.querySelectorAll('h2');
+    let ok = "";
+    if(!answer.text.length && !answer.image.length) {
+        if(i == 2) {
+            alerts[2].innerHTML = 'É preciso que as perguntas tenham alguma resposta correta'
+            alerts[3].innerHTML = 'É preciso que as perguntas tenham alguma resposta correta'
+            alerts[2].classList.remove('ocult');
+            alerts[3].classList.remove('ocult');
+            ok = "a";
+            return ok;
+        } 
+        else if(i == 4) {
+            alerts[4].innerHTML = 'É preciso que as perguntas tenham alguma resposta incorreta'
+            alerts[5].innerHTML = 'É preciso que as perguntas tenham alguma resposta incorreta'
+            alerts[4].classList.remove('ocult');
+            alerts[5].classList.remove('ocult');
+            ok = "a";
+            return ok;
+        }
+        else return "";
+    }
+    else {
+        alerts[i].classList.add('ocult');
+        alerts[i+1].classList.add('ocult');
+    }
+    if(!answer.text.length) {
+        alerts[i].innerHTML = "Textos das respostas não podem estar vazios"
+        alerts[i].classList.remove('ocult');
+        ok = "a";
+    }
+    else 
+        alerts[i].classList.add('ocult');
+
+    if(!isValidUrl(answer.image)) {
+        alerts[i+1].innerHTML = "URL das imagens das respostas devem ter formato de URL";
+        alerts[i+1].classList.remove('ocult');
+        ok = "a";
+    }
+    else
+        alerts[i+1].classList.add('ocult');
+        
+    return ok;
 }
 
 function getLevelsInfo() {
@@ -107,6 +206,7 @@ function getLevelsInfo() {
 
     levels.forEach(element => {
         const levelArray = element.querySelectorAll('input');
+        const alerts = element.querySelectorAll('h2')
         if(levelArray[1].value == 0)
             haveZero = true;
         levelObj = {
@@ -115,14 +215,16 @@ function getLevelsInfo() {
             image: levelArray[2].value,
             text: levelArray[3].value
         }
-        const validation = validateLevel(levelObj);
+        
+        const validation = validateLevel(levelObj, element);
+
         if(validation !== "") {
-            displayAlert(validation, ".screen3-3");
             noContinue = true;
             return;
         }
+
         levelsArray.push(levelObj);
-        console.log("ALOO " + levelsArray);
+
     })
 
     if(!haveZero) {
@@ -135,7 +237,6 @@ function getLevelsInfo() {
     delete userQuizz.numLevels;
     delete userQuizz.numQuestions
 
-    console.log(levelsArray);
     userQuizz.levels = levelsArray;
 
     constructPageFour();
@@ -172,7 +273,6 @@ function constructPageFour() {
         
         nodeTransition(".loading-screen", ".quizz-creation");
 
-        console.log(response);
 
         let userQuizzesList = JSON.parse(localStorage.getItem("userQuizzesList"));
         if(userQuizzesList == null)
@@ -209,9 +309,13 @@ function constructPageThree() {
                                     </div>
                                     <div class="container ocult level-info">
                                         <input type="text" placeholder="Titulo do nível">
+                                        <h2 class="ocult"></h2>
                                         <input type="number" placeholder="% de acerto mínima">
+                                        <h2 class="ocult"></h2>
                                         <input type="text" placeholder="URL da imagem do nível">
+                                        <h2 class="ocult"></h2>
                                         <input type="text" placeholder="Descrição do nível">
+                                        <h2 class="ocult"></h2>
                                     </div>
                                 </div>`
     
@@ -220,18 +324,32 @@ function constructPageThree() {
 
 }
 
-function validateQuestion(question) {
-    if(question.title.length < 20)
-        return "Textos das perguntas devem ter no mínimo 20 caracteres";
-    if(question.color[0] != '#' || question.color.length != 7)
-        return "A cor deve ser um hexadecimal começado em # seguido por 6 caracteres";
-    return "";
+function validateQuestion(question, element) {
+    const alerts = element.querySelectorAll('h2')
+    let ok = "";
+    if(question.title.length < 20)  {
+        alerts[0].innerHTML = "Textos das perguntas devem ter no mínimo 20 caracteres";
+        alerts[0].classList.remove('ocult');
+        ok = "a";
+    }
+    else 
+        alerts[0].classList.add('ocult');
+    
+    if(question.color[0] != '#' || question.color.length != 7) {
+        alerts[1].innerHTML = "A coloração deve ser um código hexadecimal começado em #.";
+        alerts[1].classList.remove('ocult');
+        ok = "a";
+    }
+    else 
+        alerts[1].classList.add('ocult');
+    
+    return ok;
 }
 
 function displayAlert(orientation, screen) {
-    const warning = document.querySelector(`${screen} h2`);
-    warning.classList.remove('ocult');
-    warning.innerHTML = orientation;
+    const warning = document.querySelectorAll(`${screen} h2`);
+    warning[warning.length-1].classList.remove('ocult');
+    warning[warning.length-1].innerHTML = orientation;
 }
 
 function getQuestionsInfo() {
@@ -248,14 +366,10 @@ function getQuestionsInfo() {
             answers: []
         }
 
-        const check = validateQuestion(questionObj);
-        console.log(check);
+        const check = validateQuestion(questionObj, question);
 
-        if(check !== "") {
-            displayAlert(check, ".screen3-2");
-            notGo = true;
-            return;
-        }
+        if(check !== "") 
+            notGo = true;  
 
         let validation;
         for(let i = 2; i < 10; i += 2) {
@@ -266,35 +380,17 @@ function getQuestionsInfo() {
                 isCorrectAnswer: (i === 2)
             }
 
-            validation = validateAnswer(answer);
-            console.log(i, validation);
+            validation = validateAnswer(answer, question, i);
+            console.log(i, validation);      
 
-            if(validation === "empty") {
-                console.log(i);
-                if(i === 2) {
-                    displayAlert('É preciso que as perguntas tenham uma resposta correta', ".screen3-2");
-                    notGo = true;
-                    return;
-                }
-                else continue;
-            }        
-
-            else if(validation !== "") {
-                displayAlert(validation, ".screen3-2");
+            if(validation !== "") {
                 notGo = true;
-                return;
+                continue;
             }
 
             questionObj.answers.push(answer);
             
         }
-
-        if(questionObj.answers.length < 2) {
-            displayAlert("É necessário ter ao menos 1 resposta incorreta para cada pergunta", ".screen3-2");
-            notGo = true;
-            return;
-        }
-
         
         questionsArr.push(questionObj);
     
@@ -370,7 +466,7 @@ function getInitialInfo() {
         numLevels: form[3].value
     }
 
-    const validation = validateInitial(initialInfo)
+    const validation = validateInitial(initialInfo, document.querySelector('.initial-info'))
 
     if(validation === "ok") {
         userQuizz = initialInfo;
@@ -379,9 +475,6 @@ function getInitialInfo() {
         constructPageTwo(userQuizz.numQuestions);
         nodeTransition(".screen3-1", ".screen3-2");
     }
-    
-    else 
-        displayAlert(validation, ".screen3-1");
     
 
 }
